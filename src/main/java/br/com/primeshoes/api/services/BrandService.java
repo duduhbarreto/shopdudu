@@ -1,5 +1,7 @@
 package br.com.primeshoes.api.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,27 +13,31 @@ import br.com.primeshoes.api.repositories.BrandRepository;
 
 @Service
 public class BrandService {
-	
-	@Autowired
-	protected BrandRepository brandRepository;
-	
-	public BrandResponseDTO store(BrandCreateDTO brandCreate) throws Exception
-	{
-		Brand brand = BrandMapper.toEntity(brandCreate);
-				
-		return BrandMapper.toDTO(brandRepository.save(brand));
-	}
-	
-	public BrandResponseDTO show(long id) {
-		Brand brand = brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Marca não encontrada!"));
-		
-		return BrandMapper.toDTO(brand);
-	}
-	
-	protected Brand search(long id) {
-		Brand brand = brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Marca não encontrada!"));
-		
-		return brand;
-	}
-
+    
+    @Autowired
+    protected BrandRepository brandRepository;
+    
+    public BrandResponseDTO store(BrandCreateDTO brandCreate) throws Exception {
+        Brand brand = BrandMapper.toEntity(brandCreate);
+                
+        return BrandMapper.toDTO(brandRepository.save(brand));
+    }
+    
+    public List<BrandResponseDTO> list() {
+        return brandRepository.findAll().stream()
+            .map(BrandMapper::toDTO)
+            .toList();
+    }
+    
+    public BrandResponseDTO show(long id) {
+        Brand brand = brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Marca não encontrada!"));
+        
+        return BrandMapper.toDTO(brand);
+    }
+    
+    protected Brand search(long id) {
+        Brand brand = brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Marca não encontrada!"));
+        
+        return brand;
+    }
 }
