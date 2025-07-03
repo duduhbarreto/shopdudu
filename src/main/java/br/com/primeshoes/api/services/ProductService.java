@@ -216,4 +216,7 @@ public class ProductService {
             .map(ProductMapper::toDTO)
             .toList();
     }
+    public Product findById(long id) {
+    return productRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
 }

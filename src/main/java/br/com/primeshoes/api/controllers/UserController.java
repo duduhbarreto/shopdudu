@@ -84,4 +84,12 @@ public class UserController {
 		userService.destroy(id_user);
 		return new ResponseEntity<>("Usuário deletado com sucesso.", HttpStatus.OK);
 	}
+	@GetMapping("/show/me")
+	public ResponseEntity<?> showCurrentUser() {
+    User user = config.getAuthUser();
+    if (user == null) {
+        return new ResponseEntity<>("Usuário não autenticado", HttpStatus.UNAUTHORIZED);
+    }
+    return new ResponseEntity<>(userService.show(user.getId()), HttpStatus.OK);
+	}
 }
