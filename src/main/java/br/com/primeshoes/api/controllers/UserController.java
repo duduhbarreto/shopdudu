@@ -86,10 +86,12 @@ public class UserController {
 	}
 	@GetMapping("/show/me")
 	public ResponseEntity<?> showCurrentUser() {
-    User user = config.getAuthUser();
-    if (user == null) {
-        return new ResponseEntity<>("Usuário não autenticado", HttpStatus.UNAUTHORIZED);
-    }
-    return new ResponseEntity<>(userService.show(user.getId()), HttpStatus.OK);
+		User user = config.getAuthUser();
+		if (user == null) {
+			return new ResponseEntity<>("Usuário não autenticado", HttpStatus.UNAUTHORIZED);
+		}
+		return new ResponseEntity<>(userService.show(user.getId()), HttpStatus.OK);
 	}
+		@Autowired
+	private SecurityConfig config;
 }

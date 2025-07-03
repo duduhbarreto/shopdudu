@@ -195,10 +195,11 @@ public class ProductController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
     @GetMapping("/variations/{productId}")
     public ResponseEntity<List<ProductVariation>> getProductVariations(@PathVariable long productId) {
-    Product product = productService.findById(productId);
-    List<ProductVariation> variations = productRepository.showByProduct(product);
-    return new ResponseEntity<>(variations, HttpStatus.OK);
+        Product product = productService.findById(productId);
+        List<ProductVariation> variations = productRepository.showByProduct(product);
+        return new ResponseEntity<>(variations, HttpStatus.OK);
     }
 }
